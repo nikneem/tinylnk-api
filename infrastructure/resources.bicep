@@ -83,5 +83,19 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
         }
       ]
     }
+    template: {
+      containers: [
+        {
+          name: defaultResourceName
+          image: '${systemName}:${containerVersion}'
+          env: [
+            {
+              name: 'Azure__StorageAccountName'
+              value: storageAccount.name
+            }
+          ]
+        }
+      ]
+    }
   }
 }
