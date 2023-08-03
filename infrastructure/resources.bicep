@@ -74,6 +74,14 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
             'https://localhost:4200'
             'https://app.tinylnk.nl'
           ]
+          allowCredentials: true
+          allowedMethods: [
+            'GET'
+            'POST'
+            'PUT'
+            'DELETE'
+            'OPTIONS'
+          ]
         }
         customDomains: [
           {
