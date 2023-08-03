@@ -1,6 +1,10 @@
 targetScope = 'subscription'
 
 param containerVersion string
+param integrationResourceGroupName string
+param containerAppEnvironmentName string
+param containerRegistryName string
+
 param location string = deployment().location
 
 var systemName = 'tinylnk-api'
@@ -17,5 +21,8 @@ module resourcesModule 'resources.bicep' = {
   params: {
     containerVersion: containerVersion
     location: location
+    integrationResourceGroupName: integrationResourceGroupName
+    containerAppEnvironmentName: containerAppEnvironmentName
+    containerRegistryName: containerRegistryName
   }
 }

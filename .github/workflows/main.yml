@@ -55,6 +55,7 @@ jobs:
       - name: Build & Push
         working-directory: infrastructure
         run: |
+          bicep build-params main.params.bicepparam 
           az bicep build --file main.bicep
       - name: Publish Artifact
         uses: actions/upload-artifact@v3
@@ -81,4 +82,4 @@ jobs:
         id: arm
         uses: Azure/cli@v1
         with:
-          inlineScript: az deployment sub create --name tinylink-api  --location westeurope --template-file ./infrastructure/main.json --parameters containerVersion=${{needs.versionize.outputs.semver}}
+          inlineScript: az deployment sub create --name tinylink-api  --location westeurope --template-file ./infrastructure/main.json --parameters main.params.json --parameters containerVersion=${{needs.versionize.outputs.semver}}

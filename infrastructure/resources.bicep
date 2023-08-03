@@ -1,12 +1,25 @@
 param containerVersion string
 param location string
+param integrationResourceGroupName string
+param containerAppEnvironmentName string
+param containerRegistryName string
 
 var systemName = 'tinylnk-api'
 var defaultResourceName = '${systemName}-we'
+var containerRegistryPasswordSecretRef = 'containerRegistryPassword'
 
 var tables = [
   'shortlinks'
 ]
+
+resource containerAppEnvironment 'Microsoft.App/connectedEnvironments@2023-05-01' existing = {
+  name: containerAppEnvironmentName
+  scope: resourceGroup(integrationResourceGroupName)
+}
+resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
+  name: containerRegistryName
+  scope: resourceGroup(integrationResourceGroupName)
+}
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: uniqueString(defaultResourceName)
@@ -24,3 +37,51 @@ resource storageAccountTable 'Microsoft.Storage/storageAccounts/tableServices/ta
   name: table
   parent: storageAccountTableService
 }]
+
+resource apiContainerApp 'Microsoft.App/containerApps@2023-05-01' = {
+  name: '${defaultResourceName}-ca'
+  location: location
+  dependsOn: [
+    storageAccount
+  ]
+  identity: {
+    type: 'SystemAssigned'
+  }
+  properties: {
+    environmentId: containerAppEnvironment.id
+    configuration: {
+      activeRevisionsMode: 'Single'
+      dapr: {
+        enabled: true
+        appId: defaultResourceName
+        appPort: 80
+        appProtocol: 'http'
+      }
+      ingress: {
+        external: true
+        targetPort: 80
+        transport: 'http2'
+        corsPolicy: {
+          allowedOrigins: [
+            'https://localhost:4200'
+            'https://app.tinylnk.nl'
+          ]
+        }
+      }
+      secrets: [
+        {
+          name: containerRegistryPasswordSecretRef
+          value: containerRegistry.listCredentials().passwords[0].value
+        }
+      ]
+      maxInactiveRevisions: 1
+      registries: [
+        {
+          server: containerRegistry.properties.loginServer
+          username: containerRegistry.properties.adminUserEnabled ? containerRegistry.name : null
+          passwordSecretRef: containerRegistryPasswordSecretRef
+        }
+      ]
+    }
+  }
+}
