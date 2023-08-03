@@ -62,7 +62,7 @@ jobs:
           name: bicep-templates
           path: infrastructure/*.json
 
-  infrastructure-incremental-test:
+  infrastructure-incremental:
     needs: [build, publish-bicep, versionize]
     runs-on: ubuntu-latest
     steps:
