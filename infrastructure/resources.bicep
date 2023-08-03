@@ -12,7 +12,7 @@ var tables = [
   'shortlinks'
 ]
 
-resource containerAppEnvironment 'Microsoft.App/connectedEnvironments@2023-05-01' existing = {
+resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-preview' existing = {
   name: containerAppEnvironmentName
   scope: resourceGroup(integrationResourceGroupName)
 }
@@ -80,21 +80,39 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
           passwordSecretRef: containerRegistryPasswordSecretRef
         }
       ]
+
     }
     template: {
       containers: [
         {
           name: defaultResourceName
-          image: '${systemName}:${containerVersion}'
+          image: '${containerRegistry.properties.loginServer}/${systemName}:${containerVersion}'
           env: [
             {
               name: 'Azure__StorageAccountName'
               value: storageAccount.name
             }
           ]
+          resources: {
+            cpu: json('0.25')
+            memory: '0.5Gi'
+          }
         }
       ]
-
+      scale: {
+        minReplicas: 1
+        maxReplicas: 6
+        rules: [
+          {
+            name: 'http-rule'
+            http: {
+              metadata: {
+                concurrentRequests: '30'
+              }
+            }
+          }
+        ]
+      }
     }
   }
 }

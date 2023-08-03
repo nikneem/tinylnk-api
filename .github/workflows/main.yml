@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 env:
-  IMAGE_NAME: tinylink-api
+  IMAGE_NAME: tinylnk-api
 
 jobs:
   versionize:
