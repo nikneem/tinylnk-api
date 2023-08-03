@@ -38,7 +38,7 @@ resource storageAccountTable 'Microsoft.Storage/storageAccounts/tableServices/ta
   parent: storageAccountTableService
 }]
 
-resource apiContainerApp 'Microsoft.App/containerApps@2023-05-01' = {
+resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
   name: '${defaultResourceName}-ca'
   location: location
   dependsOn: [
