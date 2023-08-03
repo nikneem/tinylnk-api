@@ -68,13 +68,19 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
       ingress: {
         external: true
         targetPort: 80
-        transport: 'http2'
+        transport: 'http'
         corsPolicy: {
           allowedOrigins: [
             'https://localhost:4200'
             'https://app.tinylnk.nl'
           ]
         }
+        customDomains: [
+          {
+            name: 'tinylnk.nl'
+            bindingType: 'SniEnabled'
+          }
+        ]
       }
       secrets: [
         {
