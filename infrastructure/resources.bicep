@@ -86,11 +86,11 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
         customDomains: [
           {
             name: 'tinylnk.nl'
-            bindingType: 'SniEnabled'
+            bindingType: 'Disabled'
           }
           {
             name: 'api.tinylnk.nl'
-            bindingType: 'SniEnabled'
+            bindingType: 'Disabled'
           }
         ]
       }
