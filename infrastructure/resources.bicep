@@ -6,7 +6,7 @@ param containerRegistryName string
 
 var systemName = 'tinylnk-api'
 var defaultResourceName = '${systemName}-we'
-var containerRegistryPasswordSecretRef = 'containerRegistryPassword'
+var containerRegistryPasswordSecretRef = 'container-registry-password'
 
 var tables = [
   'shortlinks'
