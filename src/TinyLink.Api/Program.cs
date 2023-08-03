@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using TinyLink.Core.Abstractions;
-using TinyLink.Core.Commands;
-using TinyLink.Core.Configuration;
+using TinyLink.Core.ExtensionMethods;
 using TinyLink.ShortLinks.TableStorage.ExtensionMethods;
 
 var corsPolicyName = "DefaultCors";
@@ -10,13 +8,8 @@ var corsPolicyName = "DefaultCors";
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
-
-builder.Services.AddScoped<ICommandsHandler, UrlShortnerCommands>();
-builder.Services.Configure<AzureCloudConfiguration>(
-    builder.Configuration.GetSection(AzureCloudConfiguration.SectionName));
-builder.Services.AddApplicationInsightsTelemetry();
-
-builder.Services.AddTinyLinkShortLinksWithTableStorage();
+builder.Services.AddTinyLinksCore(builder.Configuration)
+.AddTinyLinkShortLinksWithTableStorage();
 
 builder.Services.AddCors(options =>
 {

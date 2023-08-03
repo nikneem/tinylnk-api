@@ -2,6 +2,7 @@
 using HexMaster.DomainDrivenDesign;
 using TinyLink.Core;
 using TinyLink.Core.Abstractions;
+using TinyLink.Core.Abstractions.Commands;
 using TinyLink.Core.Commands;
 using TinyLink.Core.Commands.CommandMessages;
 using TinyLink.Core.Helpers;
@@ -18,7 +19,7 @@ namespace TinyLink.ShortLinks.Services;
 public class ShortLinksService : IShortLinksService
 {
     private readonly IShortLinksRepository _repository;
-    private readonly ICommandsHandler _commandsHandler;
+    private readonly ICommandsSenderFactory _commandsSenderFactory;
 
     public Task<List<ShortLinksListItemDto>> ListAsync(string ownerId, string? query, CancellationToken cancellationToken = default)
     {
@@ -58,7 +59,9 @@ public class ShortLinksService : IShortLinksService
     public async Task<ShortLinkDetailsDto> ResolveAsync(string shortCode, CancellationToken cancellationToken = default)
     {
         var domainModel = await _repository.ResolveAsync(shortCode, cancellationToken);
-await             _commandsHandler.Send(new ProcessHitCommand(shortCode, DateTimeOffset.UtcNow), QueueName.HitsQueueName);
+        await _commandsSenderFactory.Send(
+            new ProcessHitCommand(shortCode, DateTimeOffset.UtcNow),
+            QueueName.HitsQueueName);
         return DomainModelToDto(domainModel);
     }
 
@@ -94,10 +97,10 @@ await             _commandsHandler.Send(new ProcessHitCommand(shortCode, DateTim
         return  null!;
     }
 
-    public ShortLinksService(IShortLinksRepository repository, ICommandsHandler commandsHandler)
+    public ShortLinksService(IShortLinksRepository repository, ICommandsSenderFactory commandsSenderFactory)
     {
         _repository = repository;
-        _commandsHandler = commandsHandler;
+        _commandsSenderFactory = commandsSenderFactory;
     }
 
 }
