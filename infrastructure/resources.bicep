@@ -3,6 +3,8 @@ param location string
 param integrationResourceGroupName string
 param containerAppEnvironmentName string
 param containerRegistryName string
+param applicationInsightsName string
+param serviceBusName string
 
 var systemName = 'tinylnk-api'
 var defaultResourceName = '${systemName}-we'
@@ -18,6 +20,14 @@ resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-p
 }
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: containerRegistryName
+  scope: resourceGroup(integrationResourceGroupName)
+}
+resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing = {
+  name: applicationInsightsName
+  scope: resourceGroup(integrationResourceGroupName)
+}
+resource serviceBus 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' existing = {
+  name: serviceBusName
   scope: resourceGroup(integrationResourceGroupName)
 }
 
@@ -91,6 +101,14 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
             {
               name: 'Azure__StorageAccountName'
               value: storageAccount.name
+            }
+            {
+              name: 'Azure__ServiceBusName'
+              value: serviceBus.name
+            }
+            {
+              name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+              value: applicationInsights.properties.ConnectionString
             }
           ]
           resources: {

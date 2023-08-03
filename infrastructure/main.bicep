@@ -4,6 +4,8 @@ param containerVersion string
 param integrationResourceGroupName string
 param containerAppEnvironmentName string
 param containerRegistryName string
+param applicationInsightsName string
+param serviceBusName string
 
 param location string = deployment().location
 
@@ -24,5 +26,7 @@ module resourcesModule 'resources.bicep' = {
     integrationResourceGroupName: integrationResourceGroupName
     containerAppEnvironmentName: containerAppEnvironmentName
     containerRegistryName: containerRegistryName
+    applicationInsightsName: applicationInsightsName
+    serviceBusName: serviceBusName
   }
 }
