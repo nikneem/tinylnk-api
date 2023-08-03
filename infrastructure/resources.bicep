@@ -41,14 +41,12 @@ resource storageAccountTable 'Microsoft.Storage/storageAccounts/tableServices/ta
 resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
   name: '${defaultResourceName}-ca'
   location: location
-  dependsOn: [
-    storageAccount
-  ]
   identity: {
     type: 'SystemAssigned'
   }
   properties: {
     environmentId: containerAppEnvironment.id
+    managedEnvironmentId: containerAppEnvironment.id
     configuration: {
       activeRevisionsMode: 'Single'
       dapr: {
@@ -96,6 +94,7 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
           ]
         }
       ]
+
     }
   }
 }
