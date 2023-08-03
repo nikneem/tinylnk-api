@@ -134,3 +134,16 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
     }
   }
 }
+
+resource serviceBusDataSenderRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
+  name: '69a216fc-b8fb-44d8-bc22-1f3c2cd27a39'
+}
+module serviceBusDataSenderRoleAssignment 'roleAssignment.bicep' = {
+  name: 'serviceBusDataSenderRoleAssignment'
+  scope: resourceGroup(integrationResourceGroupName)
+  params: {
+    principalId: apiContainerApp.identity.principalId
+    roleDefinitionId: serviceBusDataSenderRoleDefinition.id
+    principalType: 'ServicePrincipal'
+  }
+}
