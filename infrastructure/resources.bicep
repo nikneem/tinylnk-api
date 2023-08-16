@@ -7,7 +7,7 @@ param applicationInsightsName string
 param serviceBusName string
 
 var systemName = 'tinylnk-api'
-var defaultResourceName = '${systemName}-we'
+var defaultResourceName = '${systemName}-ne'
 var containerRegistryPasswordSecretRef = 'container-registry-password'
 
 var tables = [

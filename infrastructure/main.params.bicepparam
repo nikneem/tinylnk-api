@@ -1,8 +1,8 @@
 using './main.bicep'
 
 param containerVersion = '0.1.11'
-param integrationResourceGroupName = 'tinylnk-integration-we'
-param containerAppEnvironmentName = 'tinylnk-integration-we-env'
-param containerRegistryName = 'tinylnkintegrationwe'
-param applicationInsightsName = 'tinylnk-integration-we-ai'
-param serviceBusName = 'tinylnk-integration-we-bus'
+param integrationResourceGroupName = 'tinylnk-integration-ne'
+param containerAppEnvironmentName = 'tinylnk-integration-ne-env'
+param containerRegistryName = 'tinylnkintegrationne'
+param applicationInsightsName = 'tinylnk-integration-ne-ai'
+param serviceBusName = 'tinylnk-integration-ne-bus'
