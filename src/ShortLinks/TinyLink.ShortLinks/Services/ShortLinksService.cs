@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using HexMaster.DomainDrivenDesign;
+using Microsoft.Extensions.Logging;
 using TinyLink.Core;
 using TinyLink.Core.Abstractions;
 using TinyLink.Core.Abstractions.Commands;
@@ -20,11 +21,13 @@ public class ShortLinksService : IShortLinksService
 {
     private readonly IShortLinksRepository _repository;
     private readonly ICommandsSenderFactory _commandsSenderFactory;
+    private readonly ILogger<ShortLinksService> _logger;
 
     public Task<List<ShortLinksListItemDto>> ListAsync(string ownerId, string? query, CancellationToken cancellationToken = default)
     {
         // Sanitize pagination input and throw exceptions for invalid values
         //Sanitize.PaginationInput(page, pageSize);
+        _logger.LogInformation("Fetching all short links for specific user");
 
         if (!string.IsNullOrWhiteSpace(query) && (!Regex.IsMatch(query, Constants.AlphanumericStringRegularExpression)))
         {
@@ -97,10 +100,14 @@ public class ShortLinksService : IShortLinksService
         return  null!;
     }
 
-    public ShortLinksService(IShortLinksRepository repository, ICommandsSenderFactory commandsSenderFactory)
+    public ShortLinksService(
+        IShortLinksRepository repository, 
+        ICommandsSenderFactory commandsSenderFactory,
+        ILogger<ShortLinksService> logger)
     {
         _repository = repository;
         _commandsSenderFactory = commandsSenderFactory;
+        _logger = logger;
     }
 
 }
