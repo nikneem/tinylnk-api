@@ -51,24 +51,24 @@ resource storageAccountTable 'Microsoft.Storage/storageAccounts/tableServices/ta
   parent: storageAccountTableService
 }]
 
-// module apexCertificateModule 'managedCertificate.bicep' = {
-//   name: 'apexCertificateModule'
-//   scope: resourceGroup(integrationResourceGroupName)
-//   params: {
-//     hostname: apexHostName
-//     location: location
-//     managedEnvironmentName: containerAppEnvironment.name
-//   }
-// }
-// module apiCertificateModule 'managedCertificate.bicep' = {
-//   name: 'apiCertificateModule'
-//   scope: resourceGroup(integrationResourceGroupName)
-//   params: {
-//     hostname: apiHostName
-//     location: location
-//     managedEnvironmentName: containerAppEnvironment.name
-//   }
-// }
+module apexCertificateModule 'managedCertificate.bicep' = {
+  name: 'apexCertificateModule'
+  scope: resourceGroup(integrationResourceGroupName)
+  params: {
+    hostname: apexHostName
+    location: location
+    managedEnvironmentName: containerAppEnvironment.name
+  }
+}
+module apiCertificateModule 'managedCertificate.bicep' = {
+  name: 'apiCertificateModule'
+  scope: resourceGroup(integrationResourceGroupName)
+  params: {
+    hostname: apiHostName
+    location: location
+    managedEnvironmentName: containerAppEnvironment.name
+  }
+}
 
 resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
   name: '${defaultResourceName}-ca'
@@ -108,11 +108,13 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
         customDomains: [
           {
             name: 'tinylnk.nl'
-            bindingType: 'Disabled'
+            bindingType: 'SniEnabled'
+            certificateId: apexCertificateModule.outputs.certificateResourceId
           }
           {
             name: 'api.tinylnk.nl'
-            bindingType: 'Disabled'
+            bindingType: 'SniEnabled'
+            certificateId: apiCertificateModule.outputs.certificateResourceId
           }
         ]
       }
