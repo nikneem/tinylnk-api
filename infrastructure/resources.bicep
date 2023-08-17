@@ -108,13 +108,13 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
         customDomains: [
           {
             name: 'tinylnk.nl'
-            bindingType: 'SniEnabled'
-            certificateId: apexCertificateModule.outputs.certificateResourceId
+            bindingType: 'Disabled'
+            //certificateId: apexCertificateModule.outputs.certificateResourceId
           }
           {
             name: 'api.tinylnk.nl'
-            bindingType: 'SniEnabled'
-            certificateId: apiCertificateModule.outputs.certificateResourceId
+            bindingType: 'Disabled'
+            //certificateId: apiCertificateModule.outputs.certificateResourceId
           }
         ]
       }
