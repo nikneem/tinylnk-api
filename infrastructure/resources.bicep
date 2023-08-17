@@ -14,15 +14,12 @@ var tables = [
   'shortlinks'
 ]
 
+var apexHostName = 'tinylnk.nl'
+var apiHostName = 'api.tinylnk.nl'
+
 resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-preview' existing = {
   name: containerAppEnvironmentName
   scope: resourceGroup(integrationResourceGroupName)
-  resource apexCertificate 'certificates' existing = {
-    name: 'tinylnk.nl'
-  }
-  resource apiCertificate 'certificates' existing = {
-    name: 'api.tinylnk.nl'
-  }
 }
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: containerRegistryName
@@ -53,6 +50,25 @@ resource storageAccountTable 'Microsoft.Storage/storageAccounts/tableServices/ta
   name: table
   parent: storageAccountTableService
 }]
+
+module apexCertificateModule 'managedCertificate.bicep' = {
+  name: 'apexCertificateModule'
+  scope: resourceGroup(integrationResourceGroupName)
+  params: {
+    hostname: apexHostName
+    location: location
+    managedEnvironmentName: containerAppEnvironment.name
+  }
+}
+module apiCertificateModule 'managedCertificate.bicep' = {
+  name: 'apiCertificateModule'
+  scope: resourceGroup(integrationResourceGroupName)
+  params: {
+    hostname: apiHostName
+    location: location
+    managedEnvironmentName: containerAppEnvironment.name
+  }
+}
 
 resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
   name: '${defaultResourceName}-ca'
@@ -93,12 +109,12 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
           {
             name: 'tinylnk.nl'
             bindingType: 'SniEnabled'
-            certificateId: containerAppEnvironment::apexCertificate.id
+            certificateId: apexCertificateModule.outputs.certificateResourceId
           }
           {
             name: 'api.tinylnk.nl'
             bindingType: 'SniEnabled'
-            certificateId: containerAppEnvironment::apiCertificate.id
+            certificateId: apiCertificateModule.outputs.certificateResourceId
           }
         ]
       }
