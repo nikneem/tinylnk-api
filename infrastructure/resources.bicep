@@ -207,7 +207,6 @@ resource storageTableDataContributorRoleDefinition 'Microsoft.Authorization/role
 }
 module storageTableDataContributorRoleAssignment 'roleAssignment.bicep' = {
   name: 'storageTableDataContributorRoleAssignment'
-  scope: resourceGroup(integrationResourceGroupName)
   params: {
     principalId: apiContainerApp.identity.principalId
     roleDefinitionId: storageTableDataContributorRoleDefinition.id
