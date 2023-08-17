@@ -86,11 +86,11 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
         customDomains: [
           {
             name: 'tinylnk.nl'
-            bindingType: 'Disabled'
+            bindingType: 'SniEnabled'
           }
           {
             name: 'api.tinylnk.nl'
-            bindingType: 'Disabled'
+            bindingType: 'SniEnabled'
           }
         ]
       }
@@ -162,6 +162,19 @@ module serviceBusDataSenderRoleAssignment 'roleAssignment.bicep' = {
   params: {
     principalId: apiContainerApp.identity.principalId
     roleDefinitionId: serviceBusDataSenderRoleDefinition.id
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource storageTableDataContributorRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
+  name: '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3'
+}
+module storageTableDataContributorRoleAssignment 'roleAssignment.bicep' = {
+  name: 'storageTableDataContributorRoleAssignment'
+  scope: resourceGroup(integrationResourceGroupName)
+  params: {
+    principalId: apiContainerApp.identity.principalId
+    roleDefinitionId: storageTableDataContributorRoleDefinition.id
     principalType: 'ServicePrincipal'
   }
 }
