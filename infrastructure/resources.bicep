@@ -17,6 +17,12 @@ var tables = [
 resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-preview' existing = {
   name: containerAppEnvironmentName
   scope: resourceGroup(integrationResourceGroupName)
+  resource apexCertificate 'certificates' existing = {
+    name: 'tinylnk.nl'
+  }
+  resource apiCertificate 'certificates' existing = {
+    name: 'api.tinylnk.nl'
+  }
 }
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: containerRegistryName
@@ -87,10 +93,12 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
           {
             name: 'tinylnk.nl'
             bindingType: 'SniEnabled'
+            certificateId: containerAppEnvironment::apexCertificate.id
           }
           {
             name: 'api.tinylnk.nl'
             bindingType: 'SniEnabled'
+            certificateId: containerAppEnvironment::apiCertificate.id
           }
         ]
       }
