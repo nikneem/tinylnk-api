@@ -10,17 +10,19 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="TinyLink.Core" Version="0.1.5" />
+    <PackageReference Include="TinyLink.Core" Version="0.1.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ShortLinks\TinyLink.ShortLinks.Abstractions\TinyLink.ShortLinks.Abstractions.csproj" />
     <ProjectReference Include="..\ShortLinks\TinyLink.ShortLinks.TableStorage\TinyLink.ShortLinks.TableStorage.csproj" />
+    <ProjectReference Include="..\TinyLink.Hits.Abstractions\TinyLink.Hits.Abstractions.csproj" />
+    <ProjectReference Include="..\TinyLink.Hits.TableStorage\TinyLink.Hits.TableStorage.csproj" />
   </ItemGroup>
 
 </Project>

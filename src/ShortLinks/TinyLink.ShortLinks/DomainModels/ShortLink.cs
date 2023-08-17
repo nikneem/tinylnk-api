@@ -12,6 +12,7 @@ public class ShortLink : DomainModel<Guid>, IShortLink
 
     public string ShortCode { get; private set; }
     public string TargetUrl { get; private set; }
+    public string OwnerId { get; }
     public DateTimeOffset CreatedOn { get; }
     public DateTimeOffset? ExpiresOn { get; private set; }
 
@@ -69,23 +70,25 @@ public class ShortLink : DomainModel<Guid>, IShortLink
         }
     }
 
-    public ShortLink(Guid id, string shortCode, string targetUrl, DateTimeOffset createdOn, DateTimeOffset? expiresOn) : base(id)
+    public ShortLink(Guid id, string shortCode, string targetUrl, string ownerId, DateTimeOffset createdOn, DateTimeOffset? expiresOn) : base(id)
     {
         ShortCode = shortCode;
         TargetUrl = targetUrl;
+        OwnerId = ownerId;
         CreatedOn = createdOn;
         ExpiresOn = expiresOn;
     }
 
-    private ShortLink(string targetUrl, string shortCode) : base(Guid.NewGuid(), TrackingState.New)
+    private ShortLink(string targetUrl, string shortCode, string ownerId) : base(Guid.NewGuid(), TrackingState.New)
     {
         ShortCode = shortCode;
         TargetUrl = targetUrl;
+        OwnerId = ownerId;
         CreatedOn = DateTimeOffset.UtcNow;
     }
 
-    public static ShortLink Create(string targetUrl, string shortCode)
+    public static ShortLink Create(string targetUrl, string shortCode, string ownerId)
     {
-        return new ShortLink(targetUrl, shortCode);
+        return new ShortLink(targetUrl, shortCode, ownerId);
     }
 }

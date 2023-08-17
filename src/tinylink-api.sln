@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33717.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLink.Api", "TinyLink.Api\TinyLink.Api.csproj", "{645F14EB-46BD-46E6-B458-A452321E7332}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TinyLink.Api", "TinyLink.Api\TinyLink.Api.csproj", "{645F14EB-46BD-46E6-B458-A452321E7332}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TinyLink.ShortLinks", "TinyLink.ShortLinks", "{39CC71C4-5D60-464C-B670-29D52EFC4D5C}"
 EndProject
@@ -14,6 +14,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TinyLink.ShortLinks.TableStorage", "ShortLinks\TinyLink.ShortLinks.TableStorage\TinyLink.ShortLinks.TableStorage.csproj", "{8AF692B1-3661-4474-A16A-95255B6461D6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TinyLink.ShortLinks.Tests", "ShortLinks\TinyLink.ShortLinks.Tests\TinyLink.ShortLinks.Tests.csproj", "{B0696E2D-BA57-4B5A-82D7-CA17267585B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jobs", "Jobs", "{5FD11390-A7A9-45A0-901B-D1F181BE702B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TinyLink.Hits", "TinyLink.Hits", "{8403E529-28B2-4DEE-AAF2-AC030A03429B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLink.Hits", "TinyLink.Hits\TinyLink.Hits.csproj", "{B6CDB418-54B6-4BB6-AF42-B9F80C69A78A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLink.Hits.Abstractions", "TinyLink.Hits.Abstractions\TinyLink.Hits.Abstractions.csproj", "{21F1B048-DA03-4A61-AF50-9FF2A8544716}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLink.Hits.TableStorage", "TinyLink.Hits.TableStorage\TinyLink.Hits.TableStorage.csproj", "{97770845-CBFF-4520-97A0-B59132757D81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +51,18 @@ Global
 		{B0696E2D-BA57-4B5A-82D7-CA17267585B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0696E2D-BA57-4B5A-82D7-CA17267585B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0696E2D-BA57-4B5A-82D7-CA17267585B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6CDB418-54B6-4BB6-AF42-B9F80C69A78A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6CDB418-54B6-4BB6-AF42-B9F80C69A78A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6CDB418-54B6-4BB6-AF42-B9F80C69A78A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6CDB418-54B6-4BB6-AF42-B9F80C69A78A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21F1B048-DA03-4A61-AF50-9FF2A8544716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21F1B048-DA03-4A61-AF50-9FF2A8544716}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21F1B048-DA03-4A61-AF50-9FF2A8544716}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21F1B048-DA03-4A61-AF50-9FF2A8544716}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97770845-CBFF-4520-97A0-B59132757D81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97770845-CBFF-4520-97A0-B59132757D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97770845-CBFF-4520-97A0-B59132757D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97770845-CBFF-4520-97A0-B59132757D81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +72,9 @@ Global
 		{52033CE9-BBF7-4E46-8706-9D86C568CE5B} = {39CC71C4-5D60-464C-B670-29D52EFC4D5C}
 		{8AF692B1-3661-4474-A16A-95255B6461D6} = {39CC71C4-5D60-464C-B670-29D52EFC4D5C}
 		{B0696E2D-BA57-4B5A-82D7-CA17267585B5} = {39CC71C4-5D60-464C-B670-29D52EFC4D5C}
+		{B6CDB418-54B6-4BB6-AF42-B9F80C69A78A} = {8403E529-28B2-4DEE-AAF2-AC030A03429B}
+		{21F1B048-DA03-4A61-AF50-9FF2A8544716} = {8403E529-28B2-4DEE-AAF2-AC030A03429B}
+		{97770845-CBFF-4520-97A0-B59132757D81} = {8403E529-28B2-4DEE-AAF2-AC030A03429B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D711FEA8-1801-4B5B-80B4-8027891F43AA}

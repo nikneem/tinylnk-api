@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using TinyLink.Core.ExtensionMethods;
+using TinyLink.Hits.TableStorage.ExtensionMethods;
 using TinyLink.ShortLinks.TableStorage.ExtensionMethods;
 
 var corsPolicyName = "DefaultCors";
@@ -9,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddTinyLinksCore(builder.Configuration)
-.AddTinyLinkShortLinksWithTableStorage();
+    .AddTinyLinkShortLinksWithTableStorage()
+    .AddTinyLinkHitsWithTableStorage();
 
 builder.Services.AddCors(options =>
 {

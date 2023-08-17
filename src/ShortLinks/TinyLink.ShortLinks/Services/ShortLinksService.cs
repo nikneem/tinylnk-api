@@ -43,7 +43,7 @@ public class ShortLinksService : IShortLinksService
     public async Task<ShortLinkDetailsDto> PostAsync(string ownerId, string targetUrl, CancellationToken cancellationToken = default)
     {
         var uniqueCode = await  GenerateUniqueShortCodeAsync(cancellationToken);
-        var domainModel = ShortLink.Create(targetUrl, uniqueCode);
+        var domainModel = ShortLink.Create(targetUrl, uniqueCode, ownerId);
         if (await _repository.UpdateAsync(ownerId, domainModel, cancellationToken))
         {
             return DomainModelToDto(domainModel);
@@ -63,7 +63,7 @@ public class ShortLinksService : IShortLinksService
     {
         var domainModel = await _repository.ResolveAsync(shortCode, cancellationToken);
         await _commandsSenderFactory.Send(
-            new ProcessHitCommand(shortCode, DateTimeOffset.UtcNow),
+            new ProcessHitCommand(shortCode, domainModel.OwnerId, DateTimeOffset.UtcNow),
             QueueName.HitsQueueName);
         return DomainModelToDto(domainModel);
     }

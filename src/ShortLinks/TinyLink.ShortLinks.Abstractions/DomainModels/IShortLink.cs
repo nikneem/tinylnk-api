@@ -4,6 +4,7 @@ public interface IShortLink
 {
     string ShortCode { get;  }
     string TargetUrl { get;  }
+    string OwnerId { get; }
     DateTimeOffset CreatedOn { get; }
     DateTimeOffset? ExpiresOn { get;  }
 

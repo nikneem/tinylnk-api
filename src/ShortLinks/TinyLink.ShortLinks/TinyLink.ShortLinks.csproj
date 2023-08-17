@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HexMaster.DomainDrivenDesign" Version="2.0.0" />
+    <PackageReference Include="HexMaster.DomainDrivenDesign" Version="2.0.5" />
   </ItemGroup>
 
   <ItemGroup>

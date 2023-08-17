@@ -12,6 +12,9 @@ var containerRegistryPasswordSecretRef = 'container-registry-password'
 
 var tables = [
   'shortlinks'
+  'hits'
+  'hitsbytenminutes'
+  'hitstotal'
 ]
 
 var apexHostName = 'tinylnk.nl'
