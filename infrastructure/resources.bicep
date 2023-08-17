@@ -20,6 +20,12 @@ var apiHostName = 'api.tinylnk.nl'
 resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-preview' existing = {
   name: containerAppEnvironmentName
   scope: resourceGroup(integrationResourceGroupName)
+  resource apexCert 'managedCertificates' existing = {
+    name: '${replace(apexHostName, '.', '-')}-cert'
+  }
+  resource apiCert 'managedCertificates' existing = {
+    name: '${replace(apiHostName, '.', '-')}-cert'
+  }
 }
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: containerRegistryName
@@ -50,25 +56,6 @@ resource storageAccountTable 'Microsoft.Storage/storageAccounts/tableServices/ta
   name: table
   parent: storageAccountTableService
 }]
-
-module apexCertificateModule 'managedCertificate.bicep' = {
-  name: 'apexCertificateModule'
-  scope: resourceGroup(integrationResourceGroupName)
-  params: {
-    hostname: apexHostName
-    location: location
-    managedEnvironmentName: containerAppEnvironment.name
-  }
-}
-module apiCertificateModule 'managedCertificate.bicep' = {
-  name: 'apiCertificateModule'
-  scope: resourceGroup(integrationResourceGroupName)
-  params: {
-    hostname: apiHostName
-    location: location
-    managedEnvironmentName: containerAppEnvironment.name
-  }
-}
 
 resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
   name: '${defaultResourceName}-ca'
@@ -108,13 +95,13 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
         customDomains: [
           {
             name: 'tinylnk.nl'
-            bindingType: 'Disabled'
-            //certificateId: apexCertificateModule.outputs.certificateResourceId
+            bindingType: 'SniEnabled'
+            certificateId: containerAppEnvironment::apexCert.id
           }
           {
             name: 'api.tinylnk.nl'
-            bindingType: 'Disabled'
-            //certificateId: apiCertificateModule.outputs.certificateResourceId
+            bindingType: 'SniEnabled'
+            certificateId: containerAppEnvironment::apiCert.id
           }
         ]
       }
@@ -176,6 +163,31 @@ resource apiContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' = {
     }
   }
 }
+
+// module apexCertificateModule 'managedCertificate.bicep' = {
+//   name: 'apexCertificateModule'
+//   scope: resourceGroup(integrationResourceGroupName)
+//   dependsOn: [
+//     apiContainerApp
+//   ]
+//   params: {
+//     hostname: apexHostName
+//     location: location
+//     managedEnvironmentName: containerAppEnvironment.name
+//   }
+// }
+// module apiCertificateModule 'managedCertificate.bicep' = {
+//   name: 'apiCertificateModule'
+//   scope: resourceGroup(integrationResourceGroupName)
+//   dependsOn: [
+//     apiContainerApp
+//   ]
+//   params: {
+//     hostname: apiHostName
+//     location: location
+//     managedEnvironmentName: containerAppEnvironment.name
+//   }
+// }
 
 resource serviceBusDataSenderRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
   name: '69a216fc-b8fb-44d8-bc22-1f3c2cd27a39'
