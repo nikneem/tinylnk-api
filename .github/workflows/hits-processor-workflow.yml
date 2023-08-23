@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: bicep-templates
-          path: infrastructure/*.json
+          path: infrastructure/hits-processor/*.json
 
   build:
     needs: [versionize]
