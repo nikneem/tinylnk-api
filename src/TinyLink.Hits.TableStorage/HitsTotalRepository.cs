@@ -16,7 +16,7 @@ public class HitsTotalRepository : IHitsTotalRepository
 
     public async Task<HitsTotalDto> GetAsync(string ownerId, string shortCode, CancellationToken cancellationToken)
     {
-        var pollsQuery = _tableClient.QueryAsync<HitsTotalTableEntity>($"{nameof(HitsTotalTableEntity.PartitionKey)} eq '{ownerId}' and {nameof(HitsTotalTableEntity.RowKey)} eq '{shortCode}'");
+        var pollsQuery = _tableClient.QueryAsync<HitTableEntity>($"{nameof(HitTableEntity.PartitionKey)} eq '{ownerId}' and {nameof(HitTableEntity.RowKey)} eq '{shortCode}'");
         await foreach (var queryPage in pollsQuery.AsPages().WithCancellation(cancellationToken))
         {
             foreach (var value in queryPage.Values)
@@ -34,5 +34,9 @@ public class HitsTotalRepository : IHitsTotalRepository
         var identity = CloudIdentity.GetChainedTokenCredential();
         var storageAccountUrl = new Uri($"https://{config.Value.StorageAccountName}.table.core.windows.net");
         _tableClient = new TableClient(storageAccountUrl, TableName, identity);
+    }
+    public HitsTotalRepository(TableClient tableClient)
+    {
+        _tableClient = tableClient;
     }
 }
