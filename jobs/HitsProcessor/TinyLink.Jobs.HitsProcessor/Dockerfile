@@ -3,7 +3,10 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["TinyLink.Jobs.HitsProcessor/TinyLink.Jobs.HitsProcessor.csproj", "TinyLink.Jobs.HitsProcessor/"]
+COPY ["jobs/HitsProcessor/TinyLink.Jobs.HitsProcessor/TinyLink.Jobs.HitsProcessor.csproj", "TinyLink.Jobs.HitsProcessor/"]
+COPY ["src/TinyLink.Hits/TinyLink.Hits.csproj", "TinyLink.Hits/"]
+COPY ["src/TinyLink.Hits.Abstractions/TinyLink.Hits.Abstractions.csproj", "TinyLink.Hits.Abstractions/"]
+COPY ["src/TinyLink.Hits.TableStorage/TinyLink.Hits.TableStorage.csproj", "TinyLink.Hits.TableStorage/"]
 RUN dotnet restore "TinyLink.Jobs.HitsProcessor/TinyLink.Jobs.HitsProcessor.csproj"
 COPY . .
 WORKDIR "/src/TinyLink.Jobs.HitsProcessor"
