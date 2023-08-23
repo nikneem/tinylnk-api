@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/runtime:7.0 AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /src
+WORKDIR /
 COPY ["jobs/HitsProcessor/TinyLink.Jobs.HitsProcessor/TinyLink.Jobs.HitsProcessor.csproj", "jobs/HitsProcessor/TinyLink.Jobs.HitsProcessor/"]
 COPY ["src/TinyLink.Hits/TinyLink.Hits.csproj", "src/TinyLink.Hits/"]
 COPY ["src/TinyLink.Hits.Abstractions/TinyLink.Hits.Abstractions.csproj", "src/TinyLink.Hits.Abstractions/"]
