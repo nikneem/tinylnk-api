@@ -5,6 +5,9 @@ param containerRegistryName string
 param serviceBusName string
 param location string
 
+var systemName = 'tinylnk-api'
+var defaultResourceName = '${systemName}-ne'
+
 resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2023-04-01-preview' existing = {
   name: containerAppEnvironmentName
   scope: resourceGroup(integrationResourceGroupName)
@@ -21,14 +24,9 @@ resource serviceBus 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' existin
 var serviceBusEndpoint = '${serviceBus.id}/AuthorizationRules/RootManageSharedAccessKey'
 var serviceBusConnectionString = listKeys(serviceBusEndpoint, serviceBus.apiVersion).primaryConnectionString
 
-resource hitsStorageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
-  name: uniqueString(resourceGroup().name)
-  location: location
-  kind: 'StorageV2'
-  sku: {
-    name: 'Standard_LRS'
-  }
-  resource hitsTableStorageService 'tableServices' = {
+resource hitsStorageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' existing = {
+  name: uniqueString(defaultResourceName)
+  resource hitsTableStorageService 'tableServices' existing = {
     name: 'default'
     resource table 'tables' = {
       name: 'hits'

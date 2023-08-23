@@ -7,13 +7,11 @@ param containerRegistryName string
 param serviceBusName string
 param location string = deployment().location
 
-var systemName = 'tinylnk-hits'
-var locationAbbreviation = 'ne'
-
-var resourceGroupName = '${systemName}-${locationAbbreviation}'
+var systemName = 'tinylnk-api'
+var defaultResourceName = '${systemName}-ne'
 
 resource targetResourceGroup 'Microsoft.Resources/resourceGroups@2022-09-01' = {
-  name: resourceGroupName
+  name: defaultResourceName
   location: location
 }
 
