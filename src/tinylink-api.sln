@@ -19,15 +19,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jobs", "Jobs", "{5FD11390-A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hits", "Hits", "{8403E529-28B2-4DEE-AAF2-AC030A03429B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLink.Hits", "TinyLink.Hits\TinyLink.Hits.csproj", "{B6CDB418-54B6-4BB6-AF42-B9F80C69A78A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TinyLink.Hits", "TinyLink.Hits\TinyLink.Hits.csproj", "{B6CDB418-54B6-4BB6-AF42-B9F80C69A78A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLink.Hits.Abstractions", "TinyLink.Hits.Abstractions\TinyLink.Hits.Abstractions.csproj", "{21F1B048-DA03-4A61-AF50-9FF2A8544716}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TinyLink.Hits.Abstractions", "TinyLink.Hits.Abstractions\TinyLink.Hits.Abstractions.csproj", "{21F1B048-DA03-4A61-AF50-9FF2A8544716}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLink.Hits.TableStorage", "TinyLink.Hits.TableStorage\TinyLink.Hits.TableStorage.csproj", "{97770845-CBFF-4520-97A0-B59132757D81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TinyLink.Hits.TableStorage", "TinyLink.Hits.TableStorage\TinyLink.Hits.TableStorage.csproj", "{97770845-CBFF-4520-97A0-B59132757D81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLink.Jobs.Hits.Processor", "TinyLink.Jobs.Hits.Processor\TinyLink.Jobs.Hits.Processor.csproj", "{5D0C32AB-468E-4899-9005-3F5616E8C4F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TinyLink.Jobs.Hits.Accumulator", "TinyLink.Jobs.Hits.Accumulator\TinyLink.Jobs.Hits.Accumulator.csproj", "{57538F63-88C8-4D7F-9E78-24E96A678F07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyLink.Jobs.Hits.Accumulator", "TinyLink.Jobs.Hits.Accumulator\TinyLink.Jobs.Hits.Accumulator.csproj", "{57538F63-88C8-4D7F-9E78-24E96A678F07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TinyLink.Jobs.HitsProcessor", "..\jobs\HitsProcessor\TinyLink.Jobs.HitsProcessor\TinyLink.Jobs.HitsProcessor.csproj", "{2F3BAE24-7FAA-4E2C-8B2A-0CC1EE4B6AF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,14 +67,14 @@ Global
 		{97770845-CBFF-4520-97A0-B59132757D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97770845-CBFF-4520-97A0-B59132757D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97770845-CBFF-4520-97A0-B59132757D81}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D0C32AB-468E-4899-9005-3F5616E8C4F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D0C32AB-468E-4899-9005-3F5616E8C4F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D0C32AB-468E-4899-9005-3F5616E8C4F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D0C32AB-468E-4899-9005-3F5616E8C4F7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{57538F63-88C8-4D7F-9E78-24E96A678F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57538F63-88C8-4D7F-9E78-24E96A678F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57538F63-88C8-4D7F-9E78-24E96A678F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57538F63-88C8-4D7F-9E78-24E96A678F07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F3BAE24-7FAA-4E2C-8B2A-0CC1EE4B6AF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F3BAE24-7FAA-4E2C-8B2A-0CC1EE4B6AF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F3BAE24-7FAA-4E2C-8B2A-0CC1EE4B6AF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F3BAE24-7FAA-4E2C-8B2A-0CC1EE4B6AF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,8 +87,8 @@ Global
 		{B6CDB418-54B6-4BB6-AF42-B9F80C69A78A} = {8403E529-28B2-4DEE-AAF2-AC030A03429B}
 		{21F1B048-DA03-4A61-AF50-9FF2A8544716} = {8403E529-28B2-4DEE-AAF2-AC030A03429B}
 		{97770845-CBFF-4520-97A0-B59132757D81} = {8403E529-28B2-4DEE-AAF2-AC030A03429B}
-		{5D0C32AB-468E-4899-9005-3F5616E8C4F7} = {5FD11390-A7A9-45A0-901B-D1F181BE702B}
 		{57538F63-88C8-4D7F-9E78-24E96A678F07} = {5FD11390-A7A9-45A0-901B-D1F181BE702B}
+		{2F3BAE24-7FAA-4E2C-8B2A-0CC1EE4B6AF6} = {5FD11390-A7A9-45A0-901B-D1F181BE702B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D711FEA8-1801-4B5B-80B4-8027891F43AA}

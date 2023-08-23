@@ -9,13 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Data.Tables" Version="12.8.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
-    <PackageReference Include="TinyLink.Core" Version="0.1.5" />
+    <PackageReference Include="Azure.Data.Tables" Version="12.8.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+    <PackageReference Include="TinyLink.Core" Version="0.1.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\" />
+    <ProjectReference Include="..\..\..\src\TinyLink.Hits.TableStorage\TinyLink.Hits.TableStorage.csproj" />
   </ItemGroup>
 
 </Project>
