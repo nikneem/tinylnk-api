@@ -21,8 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ShortLinks\TinyLink.ShortLinks.Abstractions\TinyLink.ShortLinks.Abstractions.csproj" />
     <ProjectReference Include="..\ShortLinks\TinyLink.ShortLinks.TableStorage\TinyLink.ShortLinks.TableStorage.csproj" />
-    <ProjectReference Include="..\TinyLink.Hits.Abstractions\TinyLink.Hits.Abstractions.csproj" />
-    <ProjectReference Include="..\TinyLink.Hits.TableStorage\TinyLink.Hits.TableStorage.csproj" />
   </ItemGroup>
 
 </Project>
