@@ -5,13 +5,17 @@ using Newtonsoft.Json;
 using TinyLink.Core.Commands.CommandMessages;
 using TinyLink.Hits.TableStorage;
 
-const string sourceQueueName = "hits";
-
 Console.WriteLine("Starting the hits processor job");
 
+var sourceQueueName = Environment.GetEnvironmentVariable("QueueName");
 var serviceBusConnectionString = Environment.GetEnvironmentVariable("ServiceBusConnection");
 var storageAccountName = Environment.GetEnvironmentVariable("StorageAccountName");
 
+if (string.IsNullOrWhiteSpace(sourceQueueName))
+{
+    Console.WriteLine("Service bus queue name not configured properly");
+    return;
+}
 if (string.IsNullOrWhiteSpace(serviceBusConnectionString))
 {
     Console.WriteLine("Service bus connection not configured properly");

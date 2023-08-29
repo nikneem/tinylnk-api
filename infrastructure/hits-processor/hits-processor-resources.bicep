@@ -19,6 +19,9 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' e
 resource serviceBus 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' existing = {
   name: serviceBusName
   scope: resourceGroup(integrationResourceGroupName)
+  resource queue 'queues' existing = {
+    name: 'hitsprocessorqueue'
+  }
 }
 
 var serviceBusEndpoint = '${serviceBus.id}/AuthorizationRules/RootManageSharedAccessKey'
@@ -69,7 +72,7 @@ resource hitsProcessorJob 'Microsoft.App/jobs@2023-05-01' = {
               type: 'azure-servicebus'
               metadata: any(
                 {
-                  queueName: 'hits'
+                  queueName: serviceBus::queue.name
                   connection: 'servicebus-connection-string'
                 }
               )
@@ -100,6 +103,10 @@ resource hitsProcessorJob 'Microsoft.App/jobs@2023-05-01' = {
             {
               name: 'ServiceBusConnection'
               secretRef: 'servicebus-connection-string'
+            }
+            {
+              name: 'QueueName'
+              secretRef: serviceBus::queue.name
             }
             {
               name: 'StorageAccountName'

@@ -16,6 +16,10 @@ var tables = [
   'hitsbytenminutes'
   'hitstotal'
 ]
+var hitsQueueNames = [
+  'hitsprocessorqueue'
+  'hitscumulatorqueue'
+]
 
 var apexHostName = 'tinylnk.nl'
 var apiHostName = 'api.tinylnk.nl'
@@ -41,6 +45,23 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing
 resource serviceBus 'Microsoft.ServiceBus/namespaces@2022-10-01-preview' existing = {
   name: serviceBusName
   scope: resourceGroup(integrationResourceGroupName)
+}
+module serviceBusQueueModules 'servicebus-queue.bicep' = {
+  name: 'serviceBusQueueModules'
+  scope: resourceGroup(integrationResourceGroupName)
+  params: {
+    serviceBusName: serviceBus.name
+    queueNames: hitsQueueNames
+  }
+}
+module serviceBusTopicsModule 'servicebus-topic.bicep' = {
+  name: 'serviceBusTopicsModule'
+  scope: resourceGroup(integrationResourceGroupName)
+  params: {
+    serviceBusName: serviceBus.name
+    topicName: 'hits'
+    queueNames: hitsQueueNames
+  }
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
