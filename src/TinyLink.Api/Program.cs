@@ -3,8 +3,6 @@ using TinyLink.Core.ExtensionMethods;
 using TinyLink.ShortLinks.TableStorage.ExtensionMethods;
 
 var corsPolicyName = "DefaultCors";
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTinyLinksCore(builder.Configuration)
