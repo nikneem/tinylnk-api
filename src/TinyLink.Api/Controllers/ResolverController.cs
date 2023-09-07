@@ -17,6 +17,7 @@ namespace TinyLink.Api.Controllers
         [Route("{shortCode}")]
         public async Task<IActionResult> ResolveAsync(string? shortCode)
         {
+            _logger.LogInformation("Resolving short code {shortCode}", shortCode);
             var defaultRedirectUrl = _configuration.GetValue<string>("FrontEndEndpoint") ?? DefaultRedirectUrl;
             try
             {
