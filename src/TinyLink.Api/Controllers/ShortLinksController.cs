@@ -85,6 +85,14 @@ public class ShortLinksController : AuthenticatedControllerBase
         return BadRequest();
     }
 
+    [HttpDelete("{id:guid}")]
+    [Authorize]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken token)
+    {
+        var ownerId = GetSubjectId();
+        return await Task.FromResult(Ok());
+    }
+
     public ShortLinksController(IShortLinksService shortLinksService)
     {
         _shortLinksService = shortLinksService;
