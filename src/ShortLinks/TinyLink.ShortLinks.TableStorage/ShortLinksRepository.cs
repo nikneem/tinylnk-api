@@ -112,6 +112,20 @@ public class ShortLinksRepository : IShortLinksRepository
         return false;
     }
 
+    public async Task<bool> DeleteAsync(string ownerId, string id, CancellationToken cancellationToken)
+    {
+        var pollsQuery = _tableClient.QueryAsync<ShortLinkTableEntity>($"{nameof(ShortLinkTableEntity.PartitionKey)} eq '{ownerId}' and {nameof(ShortLinkTableEntity.RowKey)} eq '{id}'");
+        await foreach (var queryPage in pollsQuery.AsPages().WithCancellation(cancellationToken))
+        {
+            foreach (var value in queryPage.Values)
+            {
+                await _tableClient.DeleteEntityAsync(value.PartitionKey, value.RowKey, value.ETag, cancellationToken);
+            }
+        }
+
+        throw new ShortCodeNotFoundException();
+    }
+
     public async Task<bool> ExistsAsync(Guid id, string shortCode, CancellationToken cancellationToken)
     {
         var pollsQuery = _tableClient.QueryAsync<ShortLinkTableEntity>($"{nameof(ShortLinkTableEntity.RowKey)} ne '{id}' and {nameof(ShortLinkTableEntity.ShortCode)} eq '{shortCode}'");

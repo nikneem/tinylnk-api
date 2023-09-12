@@ -59,6 +59,11 @@ public class ShortLinksService : IShortLinksService
         return await _repository.UpdateAsync(ownerId, domainModel, cancellationToken);
     }
 
+    public async Task<bool> DeleteAsync(string ownerId, Guid id, CancellationToken cancellationToken = default)
+    {
+        return await _repository.DeleteAsync(ownerId, id.ToString(), cancellationToken);
+    }
+
     public async Task<ShortLinkDetailsDto> ResolveAsync(string shortCode, CancellationToken cancellationToken = default)
     {
         var domainModel = await _repository.ResolveAsync(shortCode, cancellationToken);

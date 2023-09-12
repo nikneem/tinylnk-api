@@ -90,7 +90,8 @@ public class ShortLinksController : AuthenticatedControllerBase
     public async Task<IActionResult> Delete(Guid id, CancellationToken token)
     {
         var ownerId = GetSubjectId();
-        return await Task.FromResult(Ok());
+        var succeeded = await _shortLinksService.DeleteAsync(ownerId, id, token);
+        return succeeded ? Ok() : NotFound();
     }
 
     public ShortLinksController(IShortLinksService shortLinksService)
