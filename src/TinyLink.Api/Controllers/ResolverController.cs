@@ -25,6 +25,7 @@ namespace TinyLink.Api.Controllers
                 {
                     var result = await _service.ResolveAsync(shortCode);
                     defaultRedirectUrl = result.EndpointUrl;
+                    _logger.LogInformation("Short code {shortCode} resolved to {redirectUrl}", shortCode, defaultRedirectUrl);
                 }
             }
             catch (Exception ex)
