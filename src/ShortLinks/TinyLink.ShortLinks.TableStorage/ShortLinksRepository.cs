@@ -3,6 +3,7 @@ using Azure.Data.Tables;
 using HexMaster.DomainDrivenDesign;
 using HexMaster.DomainDrivenDesign.ChangeTracking;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 using TinyLink.Core.Configuration;
 using TinyLink.Core.Helpers;
 using TinyLink.ShortLinks.Abstractions.DataTransferObjects;
@@ -114,15 +115,12 @@ public class ShortLinksRepository : IShortLinksRepository
 
     public async Task<bool> DeleteAsync(string ownerId, string id, CancellationToken cancellationToken)
     {
-        var pollsQuery = _tableClient.QueryAsync<ShortLinkTableEntity>($"{nameof(ShortLinkTableEntity.PartitionKey)} eq '{ownerId}' and {nameof(ShortLinkTableEntity.RowKey)} eq '{id}'");
-        await foreach (var queryPage in pollsQuery.AsPages().WithCancellation(cancellationToken))
+        var entity = await _tableClient.GetEntityAsync<ShortLinkTableEntity>(ownerId, id, cancellationToken: cancellationToken);
+        if (entity.HasValue)
         {
-            foreach (var value in queryPage.Values)
-            {
-                await _tableClient.DeleteEntityAsync(value.PartitionKey, value.RowKey, value.ETag, cancellationToken);
-            }
+            var response = await _tableClient.DeleteEntityAsync(entity.Value.PartitionKey, entity.Value.RowKey, entity.Value.ETag, cancellationToken);
+            return !response.IsError;
         }
-
         throw new ShortCodeNotFoundException();
     }
 
