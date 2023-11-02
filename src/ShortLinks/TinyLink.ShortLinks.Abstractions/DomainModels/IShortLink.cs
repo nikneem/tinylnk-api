@@ -1,6 +1,8 @@
-﻿namespace TinyLink.ShortLinks.Abstractions.DomainModels;
+﻿using HexMaster.DomainDrivenDesign.Abstractions;
 
-public interface IShortLink
+namespace TinyLink.ShortLinks.Abstractions.DomainModels;
+
+public interface IShortLink: IDomainModel<Guid>
 {
     string ShortCode { get;  }
     string TargetUrl { get;  }

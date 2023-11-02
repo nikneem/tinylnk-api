@@ -68,7 +68,7 @@ public class ShortLinksService : IShortLinksService
     {
         var domainModel = await _repository.ResolveAsync(shortCode, cancellationToken);
         await _commandsSenderFactory.Send(
-            new ProcessHitCommand(shortCode, domainModel.OwnerId, DateTimeOffset.UtcNow),
+            new ProcessHitCommand(domainModel.Id, shortCode, domainModel.OwnerId, DateTimeOffset.UtcNow),
             QueueName.HitsQueueName);
         return DomainModelToDto(domainModel);
     }
