@@ -4,6 +4,8 @@ using HexMaster.DomainDrivenDesign;
 using HexMaster.DomainDrivenDesign.ChangeTracking;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
+using System.Collections.Concurrent;
+using System.Reflection;
 using TinyLink.Core.Configuration;
 using TinyLink.Core.Helpers;
 using TinyLink.ShortLinks.Abstractions.DataTransferObjects;
@@ -12,13 +14,14 @@ using TinyLink.ShortLinks.Abstractions.Exceptions;
 using TinyLink.ShortLinks.Abstractions.Repositories;
 using TinyLink.ShortLinks.DomainModels;
 using TinyLink.ShortLinks.TableStorage.Entities;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace TinyLink.ShortLinks.TableStorage;
 
 public class ShortLinksRepository : IShortLinksRepository
 {
 
-    private const string TableName = "shortlinks";
+    public const string TableName = "shortlinks";
     private readonly TableClient _tableClient;
 
     public async Task<List<ShortLinksListItemDto>> ListAsync(string ownerId, string? query, CancellationToken cancellationToken) 
@@ -99,6 +102,7 @@ public class ShortLinksRepository : IShortLinksRepository
 
             if (dm.TrackingState == TrackingState.New)
             {
+                entity.Hits = 0;
                 var response = await _tableClient.AddEntityAsync(entity, cancellationToken);
                 return !response.IsError;
             }

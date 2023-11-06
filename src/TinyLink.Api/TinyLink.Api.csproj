@@ -15,7 +15,7 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="TinyLink.Core" Version="0.1.7" />
+    <PackageReference Include="TinyLink.Core" Version="0.1.11" />
   </ItemGroup>
 
   <ItemGroup>

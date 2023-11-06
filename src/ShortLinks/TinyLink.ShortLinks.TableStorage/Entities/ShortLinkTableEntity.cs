@@ -9,6 +9,7 @@ public record ShortLinkTableEntity : ITableEntity
     public string PartitionKey { get; set; }
     public required string ShortCode { get; set; }
     public required string EndpointUrl { get; set; }
+    public int Hits { get; set; }
     public DateTimeOffset? ExpiresOn { get; set; }
     public DateTimeOffset? Timestamp { get; set; }
     public ETag ETag { get; set; }

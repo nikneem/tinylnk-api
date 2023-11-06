@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "TinyLink.Functions": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7238"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "httpPort": 32718,
+      "useSSL": false
+    }
+  }
+}
