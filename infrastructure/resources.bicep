@@ -20,6 +20,9 @@ var hitsQueueNames = [
   'hitsprocessorqueue'
   'hitscumulatorqueue'
 ]
+var queueNames = [
+  'hitscalculationscompleted'
+]
 
 var apexHostName = 'tinylnk.nl'
 var apiHostName = 'api.tinylnk.nl'
@@ -51,10 +54,19 @@ module serviceBusQueueModules 'servicebus-queue.bicep' = {
   scope: resourceGroup(integrationResourceGroupName)
   params: {
     serviceBusName: serviceBus.name
+    queueNames: queueNames
+  }
+}
+module serviceBusHitsQueueModules 'servicebus-queue.bicep' = {
+  name: 'serviceBusHitsQueueModules'
+  scope: resourceGroup(integrationResourceGroupName)
+  params: {
+    serviceBusName: serviceBus.name
     queueNames: hitsQueueNames
   }
 }
 module serviceBusTopicsModule 'servicebus-topic.bicep' = {
+  dependsOn: [ serviceBusHitsQueueModules ]
   name: 'serviceBusTopicsModule'
   scope: resourceGroup(integrationResourceGroupName)
   params: {
