@@ -21,12 +21,10 @@ namespace TinyLink.Functions.Functions
         [Function(nameof(UpdateHitsTotalFunction))]
         public async Task Run([ServiceBusTrigger("hitscalculationscompleted")] TotalHitsChangedCommand message)
         {
-
             var storageAccountName = Environment.GetEnvironmentVariable("StorageAccountName");
             var identity = CloudIdentity.GetChainedTokenCredential();
             var storageAccountUrl = new Uri($"https://{storageAccountName}.table.core.windows.net");
             var tableClient = new TableClient(storageAccountUrl, ShortLinksRepository.TableName, identity);
-
 
             var entityQuery = await tableClient.GetEntityAsync<ShortLinkTableEntity>(message.OwnerId, message.Id.ToString());
             var entity = entityQuery.Value;
