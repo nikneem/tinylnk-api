@@ -98,6 +98,7 @@ public class ShortLinksService : IShortLinksService
                 Id = dm.Id,
                 ShortCode = domainModel.ShortCode,
                 EndpointUrl = domainModel.TargetUrl,
+                Hits = domainModel.Hits ?? 0,
                 CreatedOn = domainModel.CreatedOn,
                 ExpiresOn = domainModel.ExpiresOn
             };

@@ -14,9 +14,6 @@ var containerRegistryPasswordSecretRef = 'container-registry-password'
 
 var tables = [
   'shortlinks'
-  'hits'
-  'hitsbytenminutes'
-  'hitstotal'
 ]
 var hitsQueueNames = [
   'hitsprocessorqueue'
@@ -315,31 +312,6 @@ resource functionContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' =
     }
   }
 }
-
-// module apexCertificateModule 'managedCertificate.bicep' = {
-//   name: 'apexCertificateModule'
-//   scope: resourceGroup(integrationResourceGroupName)
-//   dependsOn: [
-//     apiContainerApp
-//   ]
-//   params: {
-//     hostname: apexHostName
-//     location: location
-//     managedEnvironmentName: containerAppEnvironment.name
-//   }
-// }
-// module apiCertificateModule 'managedCertificate.bicep' = {
-//   name: 'apiCertificateModule'
-//   scope: resourceGroup(integrationResourceGroupName)
-//   dependsOn: [
-//     apiContainerApp
-//   ]
-//   params: {
-//     hostname: apiHostName
-//     location: location
-//     managedEnvironmentName: containerAppEnvironment.name
-//   }
-// }
 
 resource serviceBusDataSenderRoleDefinition 'Microsoft.Authorization/roleDefinitions@2022-05-01-preview' existing = {
   name: '69a216fc-b8fb-44d8-bc22-1f3c2cd27a39'

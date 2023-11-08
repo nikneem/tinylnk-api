@@ -12,6 +12,7 @@ public class ShortLink : DomainModel<Guid>, IShortLink
 
     public string ShortCode { get; private set; }
     public string TargetUrl { get; private set; }
+    public int? Hits { get; }
     public string OwnerId { get; }
     public DateTimeOffset CreatedOn { get; }
     public DateTimeOffset? ExpiresOn { get; private set; }
@@ -70,10 +71,18 @@ public class ShortLink : DomainModel<Guid>, IShortLink
         }
     }
 
-    public ShortLink(Guid id, string shortCode, string targetUrl, string ownerId, DateTimeOffset createdOn, DateTimeOffset? expiresOn) : base(id)
+    public ShortLink(
+        Guid id, 
+        string shortCode, 
+        string targetUrl, 
+        int hits,
+        string ownerId, 
+        DateTimeOffset createdOn, 
+        DateTimeOffset? expiresOn) : base(id)
     {
         ShortCode = shortCode;
         TargetUrl = targetUrl;
+        Hits = hits;
         OwnerId = ownerId;
         CreatedOn = createdOn;
         ExpiresOn = expiresOn;

@@ -6,6 +6,7 @@ public interface IShortLink: IDomainModel<Guid>
 {
     string ShortCode { get;  }
     string TargetUrl { get;  }
+    int? Hits { get;  }
     string OwnerId { get; }
     DateTimeOffset CreatedOn { get; }
     DateTimeOffset? ExpiresOn { get;  }

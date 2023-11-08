@@ -104,7 +104,7 @@ public class ShortLinkTests
     {
         var start = DateTimeOffset.UtcNow.AddDays(-2);
         var expected = DateTimeOffset.UtcNow;
-        var shortLink = new ShortLink(Guid.NewGuid(), "abcdef", "https://link.to.endpoint", "ownerId", start, start);
+        var shortLink = new ShortLink(Guid.NewGuid(), "abcdef", "https://link.to.endpoint",0, "ownerId", start, start);
         shortLink.SetExpiryDate(expected);
         shortLink.ExpiresOn.Should().Be(expected);
     }
@@ -113,7 +113,7 @@ public class ShortLinkTests
     public void WhenExpiryDateEmptied_TheExpiryDateChanged()
     {
         var start = DateTimeOffset.UtcNow.AddDays(-2);
-        var shortLink = new ShortLink(Guid.NewGuid(), "abcdef", "https://link.to.endpoint", "ownerId", start, start);
+        var shortLink = new ShortLink(Guid.NewGuid(), "abcdef", "https://link.to.endpoint",0, "ownerId", start, start);
         shortLink.SetExpiryDate(null);
         shortLink.ExpiresOn.Should().Be(null);
     }

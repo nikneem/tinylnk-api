@@ -81,6 +81,7 @@ public class ShortLinksRepository : IShortLinksRepository
                     Guid.Parse(value.RowKey),
                     value.ShortCode,
                     value.EndpointUrl,
+                    value.Hits,
                     value.PartitionKey,
                     value.Timestamp ?? DateTimeOffset.UtcNow,
                     value.ExpiresOn
@@ -154,6 +155,7 @@ public class ShortLinksRepository : IShortLinksRepository
                     Guid.Parse(value.RowKey),
                     value.ShortCode,
                     value.EndpointUrl,
+                    value.Hits,
                     value.PartitionKey,
                     value.Timestamp ?? DateTimeOffset.UtcNow,
                     value.ExpiresOn
