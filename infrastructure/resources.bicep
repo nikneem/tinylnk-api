@@ -214,29 +214,7 @@ resource functionContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' =
     configuration: {
       activeRevisionsMode: 'Single'
       dapr: {
-        enabled: true
-        appId: defaultResourceName
-        appPort: 80
-        appProtocol: 'http'
-      }
-      ingress: {
-        external: true
-        targetPort: 80
-        transport: 'http'
-        corsPolicy: {
-          allowedOrigins: [
-            'https://localhost:4200'
-            'https://app.tinylnk.nl'
-          ]
-          allowCredentials: true
-          allowedMethods: [
-            'GET'
-            'POST'
-            'PUT'
-            'DELETE'
-            'OPTIONS'
-          ]
-        }
+        enabled: false
       }
       secrets: [
         {
