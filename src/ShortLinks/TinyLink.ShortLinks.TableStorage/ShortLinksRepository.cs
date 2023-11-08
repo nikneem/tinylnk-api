@@ -24,17 +24,21 @@ public class ShortLinksRepository : IShortLinksRepository
     public const string TableName = "shortlinks";
     private readonly TableClient _tableClient;
 
-    public async Task<List<ShortLinksListItemDto>> ListAsync(string ownerId, string? query, CancellationToken cancellationToken) 
+    public async Task<List<ShortLinksListItemDto>> ListAsync(string ownerId, string? query,
+        CancellationToken cancellationToken)
     {
         var polls = new List<ShortLinksListItemDto>();
-        var pollsQuery = _tableClient.QueryAsync<ShortLinkTableEntity>($"{nameof(ShortLinkTableEntity.PartitionKey)} eq '{ownerId}'");
+        var pollsQuery =
+            _tableClient.QueryAsync<ShortLinkTableEntity>(
+                $"{nameof(ShortLinkTableEntity.PartitionKey)} eq '{ownerId}'");
         await foreach (var queryPage in pollsQuery.AsPages().WithCancellation(cancellationToken))
         {
             polls.AddRange(queryPage.Values.Select(v =>
                 new ShortLinksListItemDto
                 {
                     Id = Guid.Parse(v.RowKey),
-                                       ShortCode = v.ShortCode,
+                    ShortCode = v.ShortCode,
+                    Hits = v.Hits,
                     EndpointUrl = v.EndpointUrl,
                     ExpiresOn = v.ExpiresOn,
                     CreatedOn = v.Timestamp ?? DateTimeOffset.UtcNow
@@ -56,6 +60,7 @@ public class ShortLinksRepository : IShortLinksRepository
                     Id = Guid.Parse(value.RowKey),
                     ShortCode = value.ShortCode,
                     EndpointUrl = value.EndpointUrl,
+                    Hits = value.Hits,
                     ExpiresOn = value.ExpiresOn,
                     CreatedOn = value.Timestamp ?? DateTimeOffset.UtcNow
                 };
