@@ -295,20 +295,6 @@ resource functionContainerApp 'Microsoft.App/containerApps@2023-04-01-preview' =
           }
         }
       ]
-      scale: {
-        minReplicas: 1
-        maxReplicas: 6
-        rules: [
-          {
-            name: 'http-rule'
-            http: {
-              metadata: {
-                concurrentRequests: '30'
-              }
-            }
-          }
-        ]
-      }
     }
   }
 }
