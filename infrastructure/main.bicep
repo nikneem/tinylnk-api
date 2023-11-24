@@ -3,9 +3,7 @@ targetScope = 'subscription'
 param containerVersion string
 param integrationResourceGroupName string
 param containerAppEnvironmentName string
-param containerRegistryName string
-param applicationInsightsName string
-param serviceBusName string
+param integrationEnvironment object
 
 param location string = deployment().location
 
@@ -25,8 +23,6 @@ module resourcesModule 'resources.bicep' = {
     location: location
     integrationResourceGroupName: integrationResourceGroupName
     containerAppEnvironmentName: containerAppEnvironmentName
-    containerRegistryName: containerRegistryName
-    applicationInsightsName: applicationInsightsName
-    serviceBusName: serviceBusName
+    integrationEnvironment: integrationEnvironment
   }
 }
